@@ -1,0 +1,41 @@
+# Ignore build outputs
+bin/
+obj/
+ 
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+ 
+# IDE settings
+.vscode/
+.vs/
+.idea/
+ 
+# Log files
+*.log
+ 
+# Package directories
+packages/
+node_modules/
+ 
+# Azurite default workspace folder
+~/.azurite
+ 
+# Local Azurite data files
+*.db
+*.json
+*.log
+ 
+# ASP.NET specific: Ignore publish outputs but keep static assets
+wwwroot/_framework/
+ 
+# Temporary files
+*.tmp
+*.bak
+*.swp
+ 
+# Runtime and debugging artifacts
+debug.log
+*.pdb
