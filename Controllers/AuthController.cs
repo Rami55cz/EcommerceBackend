@@ -31,7 +31,7 @@ namespace EcommerceBackend.Controllers
         {
             var clientId = _config["GitHub:ClientId"];
             // Use the callback endpoint that matches your routing and GitHub settings.
-            var redirectUri = Uri.EscapeDataString("https://localhost:7005/auth/callback");
+            var redirectUri = Uri.EscapeDataString("https://ecommerceapiwebapp-daege4dme6bqbsak.uksouth-01.azurewebsites.net/auth/callback");
             var state = Guid.NewGuid().ToString(); // You can store this value for additional security.
             var authorizationUrl = $"https://github.com/login/oauth/authorize?client_id={clientId}&redirect_uri={redirectUri}&state={state}";
             return Redirect(authorizationUrl);
@@ -105,7 +105,7 @@ namespace EcommerceBackend.Controllers
     };
 
             var jwtToken = GenerateJwtToken(claims);
-            var redirectUrl = $"https://localhost:7193/tokenreceiver?token={jwtToken}&newUser={isNewUser}";
+            var redirectUrl = $"https://ecommerceblazorfeapp-euf0a7byf9fzhdhr.uksouth-01.azurewebsites.net/tokenreceiver?token={jwtToken}&newUser={isNewUser}";
             return Redirect(redirectUrl);
         }
 

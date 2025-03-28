@@ -162,3 +162,4 @@ C:\EcommerceApp\EcommerceBackend\obj\Debug\net9.0\refint\EcommerceBackend.dll
 C:\EcommerceApp\EcommerceBackend\obj\Debug\net9.0\EcommerceBackend.pdb
 C:\EcommerceApp\EcommerceBackend\obj\Debug\net9.0\EcommerceBackend.genruntimeconfig.cache
 C:\EcommerceApp\EcommerceBackend\obj\Debug\net9.0\ref\EcommerceBackend.dll
+C:\EcommerceApp\EcommerceBackend\obj\Debug\net9.0\EcommerceBackend.sourcelink.json
