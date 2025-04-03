@@ -31,7 +31,21 @@ namespace EcommerceBackend.Controllers
                 return NotFound();
             return Ok(profile);
         }
- 
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> GetUserRole()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if(string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var user = await _context.UserProfiles.FirstOrDefaultAsync(u => u.GitHubId == userId);
+            if (user == null)
+                return NotFound();
+            
+            return Ok(user.Role);
+        }
         // PUT api/userprofiles/me
         [HttpPut("me")]
         [Authorize]
