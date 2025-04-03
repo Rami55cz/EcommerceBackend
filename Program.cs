@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorClient", policy =>
     {
-        policy.WithOrigins("https://ecommerceblazorfeapp-euf0a7byf9fzhdhr.uksouth-01.azurewebsites.net/")
+        policy.WithOrigins("https://ecommerceblazorfeapp-euf0a7byf9fzhdhr.uksouth-01.azurewebsites.net")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
