@@ -27,6 +27,23 @@ namespace ECommerceBackend.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(!int.TryParse(userIdString, out var userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+            var items = await _context.CartItems
+                .Include(c => c.Product)
+                .Where(c => c.UserId == userId)
+                .ToListAsync();
+
+            return Ok(items);
+        }
+
         [HttpPost]
         public async Task<ActionResult<CartItem>> AddToCart(CartItem cartItem)
         {
