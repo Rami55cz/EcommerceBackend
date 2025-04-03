@@ -32,7 +32,7 @@ namespace EcommerceBackend.Controllers
             return Ok(profile);
         }
 
-        [HttpGet("me")]
+        [HttpGet("role")]
         [Authorize]
         public async Task<IActionResult> GetUserRole()
         {
