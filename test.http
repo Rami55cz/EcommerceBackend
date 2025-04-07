@@ -1,19 +1,2 @@
-POST http://localhost:5014/api/order
-Content-Type: application/json
-
-{
-    "userId": 1,
-    "status": "Pending",
-    "items": [
-        {
-            "productId": 1,
-            "quantity": 2,
-            "unitPrice": 19.99
-        },
-        {
-            "productId": 2,
-            "quantity": 1,
-            "unitPrice": 9.99
-        }
-    ]   
-}
+GET ecommerceapiwebapp-daege4dme6bqbsak.uksouth-01.azurewebsites.net/api/userprofiles/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMDIwOTc2MTMiLCJ1bmlxdWVfbmFtZSI6IlJhbWk1NWN6Iiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDM3NzQ4NzgsImV4cCI6MTc0Mzc3ODQ3OCwiaWF0IjoxNzQzNzc0ODc4LCJpc3MiOiJlY29tbWVyY2UtYXBwIiwiYXVkIjoiZWNvbW1lcmNlLWFwcCJ9.RfztjXLej3P4UhntaiMbXrE8WcrKr_4xltHZRt1qPs4

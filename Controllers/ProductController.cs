@@ -25,12 +25,14 @@ namespace ECommerceBackend.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -38,8 +40,8 @@ namespace ECommerceBackend.Controllers
             return product;
         }
 
-        [Authorize(Roles = "administrator")]
         [HttpPost]
+        [Authorize(Roles = "administrator")]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
             _context.Products.Add(product);
@@ -47,8 +49,8 @@ namespace ECommerceBackend.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        [Authorize(Roles = "administrator")]
         [HttpPut("{id}")]
+        [Authorize(Roles = "administrator")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             if (id != product.Id) return BadRequest();
@@ -57,8 +59,8 @@ namespace ECommerceBackend.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "administrator")]
         [HttpDelete("{id}")]
+        [Authorize(Roles = "administrator")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
