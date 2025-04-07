@@ -21,10 +21,11 @@ namespace ECommerceBackend.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems(int userId)
         {
-            return await _context.CartItems
+            /* return await _context.CartItems
                 .Include(c => c.Product)
                 .Where(c => c.UserId == userId)
-                .ToListAsync();
+                .ToListAsync(); */
+            return Ok(await _context.CartItems.Where(bp => bp.UserId == userId).ToListAsync());
         }
 
         [HttpGet]
