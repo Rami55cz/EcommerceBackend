@@ -37,7 +37,6 @@ namespace ECommerceBackend.Controllers
                 return BadRequest("Invalid user ID");
             }
             var items = await _context.CartItems
-                .Include(c => c.Product)
                 .Where(c => c.UserId == userId)
                 .ToListAsync();
 
