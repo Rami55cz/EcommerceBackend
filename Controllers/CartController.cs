@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using EcommerceBackend.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using EcommerceBackend;
 
 namespace ECommerceBackend.Controllers
 {
@@ -46,24 +47,38 @@ namespace ECommerceBackend.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<CartItem>> AddToCart([FromBody] CartItem cartItem)
+        public async Task<ActionResult<CartItem>> AddToCart([FromBody] AddToCartDto dto)
         {
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdString, out var userId))
+            try
             {
-                return BadRequest("Invalid user ID");
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (!int.TryParse(userIdString, out var userId))
+                {
+                    return BadRequest("Invalid user ID");
+                }
+
+                var product = await _context.Products.FindAsync(dto.ProductId);
+                if (product == null)
+                {
+                    return NotFound("Product not found.");
+                }
+
+                var newItem = new CartItem
+                {
+                    ProductId = dto.ProductId,
+                    Quantity = dto.Quantity,
+                    UserId = userId
+                };
+
+                _context.CartItems.Add(newItem);
+                await _context.SaveChangesAsync();
+
+                return Ok(newItem);
             }
-
-            var newItem = new CartItem
+            catch (Exception ex)
             {
-                ProductId = cartItem.ProductId,
-                Quantity = cartItem.Quantity,
-                UserId = userId
-            };
-
-            _context.CartItems.Add(newItem);
-            await _context.SaveChangesAsync();
-            return Ok();
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
 
         [HttpPut("{productId}")]
