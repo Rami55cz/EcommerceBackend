@@ -77,9 +77,9 @@ namespace EcommerceBackend.Controllers
 
                  string role = githubUser.login.Equals("rami55cz", StringComparison.OrdinalIgnoreCase)
                     ? "administrator"
-                    : githubUser.login.Equals("rami55cz", StringComparison.OrdinalIgnoreCase)
-                        ? "vendor"
-                        : "customer";
+                    : githubUser.login.Equals("rami5500", StringComparison.OrdinalIgnoreCase)
+                        ? "customer"
+                        : "vendor";
 
                 userProfile = new UserProfile
                 {
