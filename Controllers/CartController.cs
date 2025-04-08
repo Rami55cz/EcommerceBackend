@@ -45,11 +45,25 @@ namespace ECommerceBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CartItem>> AddToCart(CartItem cartItem)
+        [Authorize]
+        public async Task<ActionResult<CartItem>> AddToCart([FromBody] CartItem cartItem)
         {
-            _context.CartItems.Add(cartItem);
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out var userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+
+            var newItem = new CartItem
+            {
+                ProductId = cartItem.ProductId,
+                Quantity = cartItem.Quantity,
+                UserId = userId
+            };
+
+            _context.CartItems.Add(newItem);
             await _context.SaveChangesAsync();
-            return Ok(cartItem);
+            return Ok();
         }
 
         [HttpPut("{productId}")]
