@@ -1,8 +1,25 @@
-POST ecommerceapiwebapp-daege4dme6bqbsak.uksouth-01.azurewebsites.net/api/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5NDkzMjgyMCIsInVuaXF1ZV9uYW1lIjoiUmFtaTU1MDAiLCJyb2xlIjoiY3VzdG9tZXIiLCJuYmYiOjE3NDQxMjc4NTAsImV4cCI6MTc0NDEzMTQ1MCwiaWF0IjoxNzQ0MTI3ODUwLCJpc3MiOiJlY29tbWVyY2UtYXBwIiwiYXVkIjoiZWNvbW1lcmNlLWFwcCJ9.3oY3Xs90DIiBmoe0myxohUx8rAHL8neX598ur_W2ZUo
-Content-Type: application/json
+POST ecommerceapiwebapp-daege4dme6bqbsak.uksouth-01.azurewebsites.net/api/product/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=MyBoundary
 
-{
-    "productId": 1,
-    "quantity": 1
-}
+--MyBoundary
+Content-Disposition: form-data; name="Name"
+
+Cool Headset
+--MyBoundary
+Content-Disposition: form-data; name="Price"
+
+49.99
+--MyBoundary
+Content-Disposition: form-data; name="Description"
+
+Noise-cancelling wireless headset.
+--MyBoundary
+Content-Disposition: form-data; name="Stock"
+
+25
+--MyBoundary
+Content-Disposition: form-data; name="Image"; filename="cameraImage.jpg"
+Content-Type: image/jpeg
+
+< ./images/cameraImage.jpg
+--MyBoundary--

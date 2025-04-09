@@ -34,6 +34,27 @@ namespace ECommerceBackend.Controllers
             return await _context.Products.ToListAsync();
         }
 
+        [HttpPost("upload")]
+        [Authorize(Roles = "administrator")]
+        public async Task<IActionResult> UploadProduct([FromForm] Product product, IFormFile image)
+        {
+            var containerClient = _blobServiceClient.GetBlobContainerClient(_config["AzureStorage:ContainerName"]);
+            await containerClient.CreateIfNotExistsAsync();
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+            var blobClient = containerClient.GetBlobClient(fileName);
+
+            using var stream = image.OpenReadStream();
+            await blobClient.UploadAsync(stream, overwrite: true);
+
+            product.ImageUrl = blobClient.Uri.ToString();
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            
+            return Ok(product);
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -71,27 +92,6 @@ namespace ECommerceBackend.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return NoContent();
-        }
-
-        [HttpPost("upload")]
-        [Authorize(Roles = "administrator")]
-        public async Task<IActionResult> UploadProduct([FromForm] Product product, IFormFile image)
-        {
-            var containerClient = _blobServiceClient.GetBlobContainerClient(_config["AzureStorage:ContainerName"]);
-            await containerClient.CreateIfNotExistsAsync();
-
-            var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-            var blobClient = containerClient.GetBlobClient(fileName);
-
-            using var stream = image.OpenReadStream();
-            await blobClient.UploadAsync(stream, overwrite: true);
-
-            product.ImageUrl = blobClient.Uri.ToString();
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            
-            return Ok(product);
         }
     }
 }
