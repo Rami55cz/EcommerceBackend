@@ -3,6 +3,7 @@ using EcommerceBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using EcommerceBackend.Data;
 using Microsoft.AspNetCore.Authorization;
+using Azure.Storage.Blobs;
 
 namespace ECommerceBackend.Controllers
 {
@@ -11,18 +12,20 @@ namespace ECommerceBackend.Controllers
     public class ProductController : ControllerBase
     {
         private readonly AppDbContext _context;
-        /* private readonly BlobServiceClient _blobServiceClient;
+        private readonly BlobServiceClient _blobServiceClient;
+        private readonly IConfiguration _config;
 
-        public ProductController(AppDbContext context, BlobServiceClient blobServiceClient)
+        public ProductController(AppDbContext context, BlobServiceClient blobServiceClient, IConfiguration config)
         {
             _context = context;
             _blobServiceClient = blobServiceClient;
-        } */
+            _config = config;
+        }
 
-        public ProductController(AppDbContext context)
+        /* public ProductController(AppDbContext context)
         {
             _context = context;
-        }
+        } */
 
         [HttpGet]
         [AllowAnonymous]
@@ -70,20 +73,25 @@ namespace ECommerceBackend.Controllers
             return NoContent();
         }
 
-        /* [HttpPost("upload")]
+        [HttpPost("upload")]
+        [Authorize(Roles = "administrator")]
         public async Task<IActionResult> UploadProduct([FromForm] Product product, IFormFile image)
         {
-            var containerClient = _blobServiceClient.GetBlobContainerClient("product-images");
+            var containerClient = _blobServiceClient.GetBlobContainerClient(_config["AzureStorage:ContainerName"]);
             await containerClient.CreateIfNotExistsAsync();
-            var blobClient = containerClient.GetBlobClient(image.FileName);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+            var blobClient = containerClient.GetBlobClient(fileName);
 
             using var stream = image.OpenReadStream();
-            await blobClient.UploadAsync(stream, true);
+            await blobClient.UploadAsync(stream, overwrite: true);
 
             product.ImageUrl = blobClient.Uri.ToString();
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+            
             return Ok(product);
-        } */
+        }
     }
 }

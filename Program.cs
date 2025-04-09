@@ -3,6 +3,7 @@ using EcommerceBackend.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Azure.Storage.Blobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
+});
+
+builder.Services.AddSingleton(x =>
+{
+    var config = builder.Configuration.GetSection("AzureStorage");
+    return new BlobServiceClient(config["ConnectionString"]);
 });
 
 // Register IHttpClientFactory (needed for calling GitHub endpoints)

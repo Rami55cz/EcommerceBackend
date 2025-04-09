@@ -1,6 +1,8 @@
 # Ignore build outputs
 bin/
 obj/
+
+appsettings.json
  
 # User-specific files
 *.user
