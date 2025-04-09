@@ -1,26 +1,26 @@
 POST ecommerceapiwebapp-daege4dme6bqbsak.uksouth-01.azurewebsites.net/api/product/upload
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMDIwOTc2MTMiLCJ1bmlxdWVfbmFtZSI6IlJhbWk1NWN6Iiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQyMjAyNzMsImV4cCI6MTc0NDIyMzg3MywiaWF0IjoxNzQ0MjIwMjczLCJpc3MiOiJlY29tbWVyY2UtYXBwIiwiYXVkIjoiZWNvbW1lcmNlLWFwcCJ9.2eRfqIw2fqgjhtfVZEaLyNQtcvS2iBglTM3tBdRFzVk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMDIwOTc2MTMiLCJ1bmlxdWVfbmFtZSI6IlJhbWk1NWN6Iiwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQyMjE2NzcsImV4cCI6MTc0NDIyNTI3NywiaWF0IjoxNzQ0MjIxNjc3LCJpc3MiOiJlY29tbWVyY2UtYXBwIiwiYXVkIjoiZWNvbW1lcmNlLWFwcCJ9.SsD3PqmJ-vHdy8ExcmyHc3OkviwSk5G1MDUNcGTUvuE
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 --MyBoundary
 Content-Disposition: form-data; name="Name"
 
-Cool Headset
+Monitor
 --MyBoundary
 Content-Disposition: form-data; name="Price"
 
-49.99
+99.99
 --MyBoundary
 Content-Disposition: form-data; name="Description"
 
-Noise-cancelling wireless headset.
+High Quality Monitor
 --MyBoundary
 Content-Disposition: form-data; name="Stock"
 
-25
+12
 --MyBoundary
-Content-Disposition: form-data; name="Image"; filename="cameraImage.jpg"
+Content-Disposition: form-data; name="Image"; filename="speakerImage.jpg"
 Content-Type: image/jpeg
 
-< ./images/cameraImage.jpg
+< ./images/speakerImage.jpg
 --MyBoundary--
