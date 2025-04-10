@@ -75,10 +75,32 @@ namespace ECommerceBackend.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "administrator")]
-        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        public async Task<IActionResult> UpdateProduct(int id, [FromForm] Product product, IFormFile? image)
         {
             if (id != product.Id) return BadRequest();
-            _context.Entry(product).State = EntityState.Modified;
+
+            var existingProduct = await _context.Products.FindAsync(id);
+            if (existingProduct == null) return NotFound();
+
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+            existingProduct.Stock = product.Stock;
+
+            if (image != null)
+            {
+                var containerClient = _blobServiceClient.GetBlobContainerClient(_config["AzureStorage:ContainerName"]);
+                await containerClient.CreateIfNotExistsAsync();
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                var blobClient = containerClient.GetBlobClient(fileName);
+
+                using var stream = image.OpenReadStream();
+                await blobClient.UploadAsync(stream, overwrite: true);
+
+                existingProduct.ImageUrl = blobClient.Uri.ToString();
+            }
+
             await _context.SaveChangesAsync();
             return NoContent();
         }
